@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ledger/core/constants/app_strings.dart';
+import 'package:shop_ledger/features/auth/presentation/login_screen.dart';
 import '../../features/splash/splash_screen.dart';
 
 class Routes{
@@ -12,6 +13,8 @@ class RouteGenerator{
     switch (routeSettings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_)=> SplashScreen());
+      case Routes.loginRoute:
+        return MaterialPageRoute(builder: (_)=> LoginScreen());
 
 
       default:

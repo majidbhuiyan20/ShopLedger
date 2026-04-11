@@ -17,6 +17,16 @@ class _LoginScreenState extends State<LoginScreen> {
         title: const Text("Login Screen"),
         centerTitle: true,
       ),
+      body: Center(
+        child: Text(
+          "Investment Property list",
+          style: TextStyle(
+            fontSize: 45,
+            fontFamily: "PlusJakartaSans",
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
     );
   }
 }

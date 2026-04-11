@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../auth/login_screen.dart';
+import '../../core/routes/app_routes.dart';
+import '../auth/presentation/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,17 +19,22 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _moveToLoginScreen() async {
     await Future.delayed(const Duration(seconds: 3));
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
-    );
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>LoginScreen()));
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("Splash Screen")
+            ],
+          ),
+        ),
     );
   }
 }
