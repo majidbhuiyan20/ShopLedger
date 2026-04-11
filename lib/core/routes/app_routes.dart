@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ledger/core/constants/app_strings.dart';
+import 'package:shop_ledger/features/auth/presentation/screens/forget_password_screen.dart';
 import 'package:shop_ledger/features/auth/presentation/screens/login_screen.dart';
 import 'package:shop_ledger/features/auth/presentation/screens/register_screen.dart';
 import 'package:shop_ledger/features/auth/presentation/screens/otp_screen.dart';
+import 'package:shop_ledger/features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/splash/splash_screen.dart';
 
 class Routes{
@@ -10,8 +12,10 @@ class Routes{
   static const String loginRoute="/loginScreen";
   static const String registerRoute="/RegisterScreen";
   static const String otpRoute="/OtpScreen";
-
+  static const String forgotPasswordRoute="/ForgotPasswordScreen";
+  static const String resetPasswordRoute="/ResetPasswordScreen";
 }
+
 class RouteGenerator{
   static Route<dynamic>getRoute(RouteSettings routeSettings){
     switch (routeSettings.name) {
@@ -22,8 +26,27 @@ class RouteGenerator{
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_)=> RegisterScreen());
       case Routes.otpRoute:
-        final email = routeSettings.arguments as String? ?? 'your email';
-        return MaterialPageRoute(builder: (_)=> OtpScreen(email: email));
+        final arguments = routeSettings.arguments as Map<String, dynamic>? ?? {};
+        final email = arguments['email'] as String? ?? 'your email';
+        final isPasswordReset = arguments['isPasswordReset'] as bool? ?? false;
+        return MaterialPageRoute(
+          builder: (_)=> OtpScreen(
+            email: email,
+            isPasswordReset: isPasswordReset,
+          ),
+        );
+      case Routes.forgotPasswordRoute:
+        return MaterialPageRoute(builder: (_)=> ForgotPasswordScreen());
+      case Routes.resetPasswordRoute:
+        final arguments = routeSettings.arguments as Map<String, dynamic>? ?? {};
+        final email = arguments['email'] as String? ?? '';
+        final otp = arguments['otp'] as String? ?? '';
+        return MaterialPageRoute(
+          builder: (_)=> ResetPasswordScreen(
+            email: email,
+            otp: otp,
+          ),
+        );
 
       default:
         return unDefineRoute();

@@ -8,10 +8,12 @@ import '../../../widgets/auth_background.dart';
 
 class OtpScreen extends StatefulWidget {
   final String email;
+  final bool isPasswordReset;
 
   const OtpScreen({
     super.key,
     required this.email,
+    this.isPasswordReset = false,
   });
 
   @override
@@ -85,11 +87,21 @@ class _OtpScreenState extends State<OtpScreen> {
     setState(() => _loading = false);
 
     if (mounted) {
-      // Navigate to next screen or show success
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('OTP verified successfully!')),
-      );
-      Navigator.pushNamed(context, Routes.loginRoute);
+      // Navigate to next screen based on flow
+      if (widget.isPasswordReset) {
+        // Password reset flow: go to reset password screen
+        Navigator.pushNamed(
+          context,
+          Routes.resetPasswordRoute,
+          arguments: {'email': widget.email, 'otp': _otpValue},
+        );
+      } else {
+        // Register flow: go to login screen
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('OTP verified successfully!')),
+        );
+        Navigator.pushNamed(context, Routes.loginRoute);
+      }
     }
   }
 

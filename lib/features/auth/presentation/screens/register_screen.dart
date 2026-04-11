@@ -67,8 +67,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     await Future.delayed(const Duration(seconds: 2));
     setState(() => _loading = false);
 
-    // Navigate to OTP screen
-    Navigator.pushNamed(context, Routes.otpRoute, arguments: _emailController.text);
+    // Navigate to OTP screen for registration
+    Navigator.pushNamed(
+      context,
+      Routes.otpRoute,
+      arguments: {'email': _emailController.text, 'isPasswordReset': false},
+    );
   }
 
   @override
