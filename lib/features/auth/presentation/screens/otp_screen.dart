@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shop_ledger/core/routes/app_routes.dart';
 import 'package:shop_ledger/features/widgets/primary_button.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_style.dart';
@@ -88,6 +89,7 @@ class _OtpScreenState extends State<OtpScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('OTP verified successfully!')),
       );
+      Navigator.pushNamed(context, Routes.loginRoute);
     }
   }
 
@@ -109,18 +111,6 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: AppColors.textPrimary,
-            size: 20,
-          ),
-        ),
-      ),
       body: AuthBackground(
         child: SafeArea(
           child: SingleChildScrollView(
@@ -185,6 +175,9 @@ class _OtpScreenState extends State<OtpScreen> {
                         contentPadding: EdgeInsets.zero,
                       ),
                       style: AppTextStyle.otpDigit,
+                      cursorHeight: 20,
+                      cursorWidth: 1,
+                      cursorColor: AppColors.primary,
                       onChanged: (value) => _onOtpFieldChanged(value, index),
                     ),
                   ),
