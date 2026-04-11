@@ -2,187 +2,114 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import '../../core/constants/app_colors.dart';
 
-/// Beautiful animated Auth Background with custom paint
+/// Light Business Auth Background
 class AuthBackground extends StatefulWidget {
   final Widget child;
-  final bool showPattern;
 
-  const AuthBackground({
-    super.key,
-    required this.child,
-    this.showPattern = true,
-  });
+  const AuthBackground({super.key, required this.child});
 
   @override
   State<AuthBackground> createState() => _AuthBackgroundState();
 }
 
 class _AuthBackgroundState extends State<AuthBackground>
-    with TickerProviderStateMixin {
-  late AnimationController _animationController;
-  late AnimationController _floatingController;
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(seconds: 20),
-      vsync: this,
-    )..repeat();
-
-    _floatingController = AnimationController(
-      duration: const Duration(seconds: 15),
+    _controller = AnimationController(
+      duration: const Duration(seconds: 10),
       vsync: this,
     )..repeat();
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
-    _floatingController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Stack(
       children: [
-        // ── Base Gradient ──────────────────────────────────────
-        Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppColors.bgBase,
-                AppColors.bgBase.withOpacity(0.98),
-                AppColors.bgBase,
-              ],
-            ),
-          ),
+        Container(color: Colors.white),
+        AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return CustomPaint(
+              painter: LightBusinessPainter(animationValue: _controller.value),
+              size: MediaQuery.of(context).size,
+            );
+          },
         ),
-
-        // ── Animated Background Painter ───────────────────────
-        if (widget.showPattern)
-          AnimatedBuilder(
-            animation: Listenable.merge([
-              _animationController,
-              _floatingController,
-            ]),
-            builder: (context, child) {
-              return CustomPaint(
-                painter: AuthBackgroundPainter(
-                  animationValue: _animationController.value,
-                  floatingValue: _floatingController.value,
-                  size: size,
-                ),
-                child: Container(),
-              );
-            },
-          ),
-
-        // ── Child Content ────────────────────────────────────
         widget.child,
       ],
     );
   }
 }
 
-/// Custom painter for animated background
-class AuthBackgroundPainter extends CustomPainter {
+class LightBusinessPainter extends CustomPainter {
   final double animationValue;
-  final double floatingValue;
-  final Size size;
 
-  AuthBackgroundPainter({
-    required this.animationValue,
-    required this.floatingValue,
-    required this.size,
-  });
+  LightBusinessPainter({required this.animationValue});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint();
+    // Sales mini chart (bottom right)
+    final salesPaint = Paint()
+      ..color = AppColors.primary.withOpacity(0.3)
+      ..style = PaintingStyle.fill;
 
-    // ── Animated Gradient Circle 1 (Top-left) ─────────────────
-    final circle1Offset = Offset(
-      -100 + (animationValue * 40),
-      -100 + (sin(floatingValue * 2 * 3.14159) * 20),
-    );
-    
-    paint.shader = RadialGradient(
-      colors: [
-        AppColors.primary.withOpacity(0.2),
-        AppColors.primary.withOpacity(0.05),
-        AppColors.primary.withOpacity(0),
-      ],
-    ).createShader(Rect.fromCircle(center: circle1Offset, radius: 150));
-    
-    canvas.drawCircle(circle1Offset, 150, paint);
+    for (int i = 0; i < 6; i++) {
+      final height = 20 + sin(animationValue * 2 * pi + i) * 15;
+      final x = size.width - 80 + i * 10;
+      final y = size.height - 40 - height;
 
-    // ── Animated Gradient Circle 2 (Bottom-right) ──────────────
-    final circle2Offset = Offset(
-      size.width + 80 - (animationValue * 40),
-      size.height + 100 + (sin(floatingValue * 2 * 3.14159) * 20),
-    );
-    
-    paint.shader = RadialGradient(
-      colors: [
-        AppColors.primary.withOpacity(0.15),
-        AppColors.primary.withOpacity(0.03),
-        AppColors.primary.withOpacity(0),
-      ],
-    ).createShader(Rect.fromCircle(center: circle2Offset, radius: 140));
-    
-    canvas.drawCircle(circle2Offset, 140, paint);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(x, y, 6, height),
+          const Radius.circular(3),
+        ),
+        salesPaint,
+      );
+    }
 
-    // ── Animated Accent Line (Center) ────────────────────────
-    final linePaint = Paint()
-      ..strokeWidth = 2
-      ..shader = LinearGradient(
-        colors: [
-          AppColors.primary.withOpacity(0),
-          AppColors.primary.withOpacity(0.25),
-          AppColors.primary.withOpacity(0),
-        ],
-      ).createShader(Rect.fromLTWH(0, size.height * 0.35, size.width, 2));
+    // Due indicator (bottom left)
+    final duePaint = Paint()
+      ..color = AppColors.primary.withOpacity(0.2)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4;
 
-    final lineYOffset = (sin(floatingValue * 2 * 3.14159) * 30);
-    canvas.drawLine(
-      Offset(-50, size.height * 0.35 + lineYOffset),
-      Offset(size.width + 50, size.height * 0.35 + lineYOffset),
-      linePaint,
+    canvas.drawArc(
+      Rect.fromLTWH(20, size.height - 70, 50, 50),
+      -pi / 2,
+      2 * pi * (0.3 + sin(animationValue * pi) * 0.1),
+      false,
+      duePaint,
     );
 
-    // ── Floating Dots Pattern ──────────────────────────────────
-    _drawFloatingDots(canvas, size);
-  }
+    // Stock level bars (top right)
+    for (int i = 0; i < 4; i++) {
+      final level = 0.4 + sin(animationValue * 3 * pi + i) * 0.3;
+      final barPaint = Paint()
+        ..color = (level > 0.6 ? Colors.green : Colors.orange).withOpacity(0.3)
+        ..style = PaintingStyle.fill;
 
-  void _drawFloatingDots(Canvas canvas, Size size) {
-    final dotPaint = Paint();
-    const dotCount = 12;
-    const dotRadius = 3.0;
-
-    for (int i = 0; i < dotCount; i++) {
-      final angle = (i / dotCount) * 2 * 3.14159;
-      final distance = 180 + (sin(floatingValue * 2 * 3.14159 + angle) * 40);
-
-      final x = size.width / 2 + distance * cos(angle);
-      final y = size.height * 0.4 + distance * sin(angle);
-
-      final opacity = 0.1 + (sin(floatingValue * 2 * 3.14159 + angle) * 0.1);
-      dotPaint.color = AppColors.primary.withOpacity(opacity);
-
-      canvas.drawCircle(Offset(x, y), dotRadius, dotPaint);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(size.width - 60 + i * 12, 30, 6, 40 * level),
+          const Radius.circular(3),
+        ),
+        barPaint,
+      );
     }
   }
 
   @override
-  bool shouldRepaint(AuthBackgroundPainter oldDelegate) =>
-      oldDelegate.animationValue != animationValue ||
-      oldDelegate.floatingValue != floatingValue;
+  bool shouldRepaint(covariant LightBusinessPainter oldDelegate) {
+    return oldDelegate.animationValue != animationValue;
+  }
 }
