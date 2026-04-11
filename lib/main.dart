@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_ledger/core/constants/app_theme.dart';
 import 'package:shop_ledger/features/splash/splash_screen.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
       home: SplashScreen(),
     );
   }
