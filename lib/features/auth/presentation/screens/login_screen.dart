@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_style.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../widgets/common_widgets.dart';
 import '../../../widgets/primary_button.dart';
 import '../../../widgets/primary_outline_button.dart';
+import '../../../widgets/auth_background.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -58,15 +60,16 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bgBase,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+      backgroundColor: Colors.transparent,
+      body: AuthBackground(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
                 const SizedBox(height: 48),
 
@@ -200,6 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: GestureDetector(
                             onTap: () {
                               // Navigate to register
+                              Navigator.pushNamed(context, Routes.registerRoute);
                             },
                             child: Text(
                               'Sign Up',
@@ -218,6 +222,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

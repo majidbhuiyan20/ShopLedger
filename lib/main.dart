@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ledger/core/constants/app_theme.dart';
-import 'package:shop_ledger/features/splash/splash_screen.dart';
+import 'package:shop_ledger/core/routes/app_routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: SplashScreen(),
+      initialRoute: Routes.splashRoute,
+      onGenerateRoute: RouteGenerator.getRoute,
     );
   }
 }
