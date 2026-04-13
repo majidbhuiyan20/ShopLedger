@@ -207,7 +207,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
               const SizedBox(height: 40),
 
-              // ── Verify Button ────────────────────────────────
+              // ────────── Verify Button ────────────────────────────────
               PrimaryButton(
                 label: 'Verify OTP',
                 loading: _loading,
