@@ -20,6 +20,7 @@ class HInputField extends StatelessWidget {
   final bool            readOnly;
   final int             maxLines;
   final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
 
   const HInputField({
     super.key,
@@ -34,7 +35,7 @@ class HInputField extends StatelessWidget {
     this.onTap,
     this.readOnly     = false,
     this.maxLines     = 1,
-    this.onChanged,
+    this.onChanged, this.validator,
   });
 
   @override

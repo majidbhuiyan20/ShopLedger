@@ -1,4 +1,5 @@
 import 'package:shop_ledger/data/remote/auth_remote_service.dart';
+import 'package:shop_ledger/models/auth/login_request.dart';
 import 'package:shop_ledger/models/auth/sign_up_request.dart';
 
 import '../../models/response_model.dart';
@@ -9,5 +10,9 @@ class AuthRepository {
 
   Future<ResponseModel> signUp(SignUpRequest request)async {
     return await remoteService.signUp(request);
+  }
+
+  Future<ResponseModel>login(LoginRequest request) async{
+    return await remoteService.login(request);
   }
 }

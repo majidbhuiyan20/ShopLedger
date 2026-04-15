@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop_ledger/features/auth/login/view_model/login_view_model.dart';
+import 'package:shop_ledger/features/widgets/app_validators.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_style.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -8,20 +11,19 @@ import '../../../widgets/primary_outline_button.dart';
 import '../../../widgets/auth_background.dart';
 
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _emailController    = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey            = GlobalKey<FormState>();
 
   bool _obscurePassword = true;
-  bool _loading         = false;
   String? _emailError;
   String? _passwordError;
 
@@ -32,33 +34,32 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  Future<void> _login() async {
-    setState(() {
-      _emailError    = null;
-      _passwordError = null;
-    });
-
-    if (_emailController.text.trim().isEmpty) {
-      setState(() => _emailError = 'Email is required');
-      return;
+  void _handleLogin() {
+    if (_formKey.currentState!.validate()) {
+      final viewModel = ref.read(loginViewModelProvider.notifier);
+      viewModel.login(
+        _emailController.text,
+        _passwordController.text,
+      );
     }
-    if (_passwordController.text.isEmpty) {
-      setState(() => _passwordError = 'Password is required');
-      return;
-    }
-
-    setState(() => _loading = true);
-
-    // TODO: API call
-    await Future.delayed(const Duration(seconds: 2));
-
-    setState(() => _loading = false);
-
-    // Navigate to home on success
   }
+
 
   @override
   Widget build(BuildContext context) {
+      final loginState = ref.watch(loginViewModelProvider);
+      final viewModel = ref.read(loginViewModelProvider.notifier);
+
+      if (loginState.isSuccess) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.pushReplacementNamed(context, Routes.splashRoute);
+        });
+      }
+      if(loginState.error != null){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(loginState.error!))
+        );
+      }
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AuthBackground(
@@ -101,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // ── Email ─────────────────────────────────────────
                 HInputField(
+                  validator: AppValidators.email,
                   label:          'Email',
                   hint:           'Enter your email address',
                   controller:     _emailController,
@@ -117,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // ── Password ──────────────────────────────────────
                 HInputField(
+                  validator: AppValidators.password,
                   label:      'Password',
                   hint:       'Enter your password',
                   controller: _passwordController,
@@ -161,13 +164,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 28),
 
                 // ── Login Button ──────────────────────────────────
-                PrimaryButton(
-                  label:   'Login',
-                  loading: _loading,
-                  onTap:   _login,
-                ),
+                  // ── Login Button ──────────────────────────────────
+                  PrimaryButton(
+                    label: 'Login',
+                    loading: loginState.isLoading,
+                    onTap: loginState.isLoading ? null : _handleLogin,
+                  ),
 
-                const SizedBox(height: 20),
+
+                  const SizedBox(height: 20),
 
                 // ── Divider ───────────────────────────────────────
                 const HDividerText(),

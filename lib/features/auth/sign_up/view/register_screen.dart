@@ -8,6 +8,7 @@ import '../../../../core/constants/app_text_style.dart';
 import '../../../widgets/common_widgets.dart';
 import '../../../widgets/auth_background.dart';
 import '../view_model/sign_up_provider.dart';
+import '../view_model/sign_up_validator.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -21,6 +22,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _usernameController = TextEditingController();
   final _emailController    = TextEditingController();
   final _passwordController = TextEditingController();
+
+  // Local UI validation errors (validators run in UI layer)
+  String? _fullNameError;
+  String? _usernameError;
+  String? _emailError;
+  String? _passwordError;
+  String? _termsError;
 
   bool _obscurePassword = true;
   bool _agreedToTerms   = false;
@@ -37,22 +45,37 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   /// Handle register button tap
   void _handleRegister() async {
     final viewModel = ref.read(signUpProvider.notifier);
-    
-    // Validate form
-    final isValid = viewModel.validateForm(
-      _usernameController.text,
-      _emailController.text,
-      _passwordController.text,
-      _agreedToTerms,
-    );
 
-    if (!isValid) {
-      // Rebuild to show errors
-      setState(() {});
+    // Clear previous UI errors
+    setState(() {
+      _fullNameError = null;
+      _usernameError = null;
+      _emailError = null;
+      _passwordError = null;
+      _termsError = null;
+    });
+
+    // Run UI validators (best practice: keep validation in UI layer)
+    final fullNameErr = SignUpValidator.validateFullName(_fullNameController.text);
+    final usernameErr = SignUpValidator.validateUsername(_usernameController.text);
+    final emailErr = SignUpValidator.validateEmail(_emailController.text);
+    final passwordErr = SignUpValidator.validatePassword(_passwordController.text);
+    final termsErr = SignUpValidator.validateTerms(_agreedToTerms);
+
+    final hasError = [fullNameErr, usernameErr, emailErr, passwordErr, termsErr].any((e) => e != null);
+
+    if (hasError) {
+      setState(() {
+        _fullNameError = fullNameErr;
+        _usernameError = usernameErr;
+        _emailError = emailErr;
+        _passwordError = passwordErr;
+        _termsError = termsErr;
+      });
       return;
     }
 
-    // Call signup API
+    // Call signup API via view model
     final success = await viewModel.signup(
       username: _usernameController.text,
       email: _emailController.text,
@@ -73,7 +96,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         },
       );
     } else {
-      // Show error snackbar
+      // Show API error snackbar
       final state = ref.read(signUpProvider);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -115,6 +138,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   label: 'Full Name',
                   hint: 'Enter full name',
                   controller: _fullNameController,
+                  errorText: _fullNameError,
                   prefix: const Icon(
                     Icons.person_outline_rounded,
                     color: AppColors.textTertiary,
@@ -129,7 +153,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   label: 'Username',
                   hint: 'your_username',
                   controller: _usernameController,
-                  errorText: signupState.usernameError,
+                  errorText: _usernameError,
                   prefix: const Icon(
                     Icons.person_outline_rounded,
                     color: AppColors.textTertiary,
@@ -145,7 +169,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   hint: 'example@email.com',
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  errorText: signupState.emailError,
+                  errorText: _emailError,
                   prefix: const Icon(
                     Icons.mail_outline_rounded,
                     color: AppColors.textTertiary,
@@ -161,7 +185,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   hint: 'Min 8 characters',
                   controller: _passwordController,
                   obscure: _obscurePassword,
-                  errorText: signupState.passwordError,
+                  errorText: _passwordError,
                   onChanged: (_) => setState(() {}),
                   prefix: const Icon(
                     Icons.lock_outline_rounded,
@@ -203,7 +227,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               : AppColors.bgSurface,
                           borderRadius: BorderRadius.circular(6),
                           border: Border.all(
-                            color: signupState.termsError != null
+                            color: _termsError != null
                                 ? AppColors.danger
                                 : _agreedToTerms
                                     ? AppColors.primary
@@ -240,10 +264,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                 ),
 
-                if (signupState.termsError != null) ...[
+                if (_termsError != null) ...[
                   const SizedBox(height: 4),
-                  Text(signupState.termsError!,
-                      style: AppTextStyle.inputError),
+                  Text(_termsError!, style: AppTextStyle.inputError),
                 ],
 
                 const SizedBox(height: 28),
