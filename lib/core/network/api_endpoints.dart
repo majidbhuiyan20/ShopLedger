@@ -1,6 +1,6 @@
 class ApiEndpoints {
   static const String baseUrl =
-      "https://maui-intermediate-represented-option.trycloudflare.com";
-  static const String register = 'api/auth/register';
+      "http://localhost:8080/api/v1";
+  static const String signUp = '/register';
 
 }

@@ -3,7 +3,7 @@ import 'package:shop_ledger/core/constants/app_strings.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
 import '../../features/auth/presentation/view/login_screen.dart';
 import '../../features/auth/presentation/view/otp_screen.dart';
-import '../../features/auth/presentation/view/register_screen.dart';
+import '../../features/auth/sign_up/view/register_screen.dart';
 import '../../features/auth/presentation/view/reset_password_screen.dart';
 import '../../features/splash/splash_screen.dart';
 

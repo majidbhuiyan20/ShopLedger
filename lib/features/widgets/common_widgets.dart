@@ -4,8 +4,6 @@ import '../../core/constants/app_text_style.dart';
 
 
 
-
-
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Input Field
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -74,7 +72,7 @@ class HInputField extends StatelessWidget {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class HDividerText extends StatelessWidget {
   final String text;
-  const HDividerText({super.key, this.text = 'OR'});
+  const HDividerText({super.key, this.text = 'Or'});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +81,7 @@ class HDividerText extends StatelessWidget {
         const Expanded(child: Divider(color: AppColors.borderDefault)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          child:   Text(text, style: AppTextStyle.bodyMedium),
+          child:   Text(text, style: AppTextStyle.bodySmall),
         ),
         const Expanded(child: Divider(color: AppColors.borderDefault)),
       ],
@@ -109,7 +107,7 @@ class HLogoMark extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          'H',
+          'SL',
           style: AppTextStyle.logoText.copyWith(fontSize: size * 0.5),
         ),
       ),
