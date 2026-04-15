@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:shop_ledger/core/network/response_handle.dart';
-import '../../data/local/shared_preference/shared_preference_data.dart';
+import '../../data/sources/local/shared_preference/shared_preference_data.dart';
 import 'api_endpoints.dart';
 import 'error_handle.dart';
 

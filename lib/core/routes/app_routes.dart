@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ledger/core/constants/app_strings.dart';
-import 'package:shop_ledger/features/auth/presentation/screens/forget_password_screen.dart';
-import 'package:shop_ledger/features/auth/presentation/screens/login_screen.dart';
-import 'package:shop_ledger/features/auth/presentation/screens/register_screen.dart';
-import 'package:shop_ledger/features/auth/presentation/screens/otp_screen.dart';
-import 'package:shop_ledger/features/auth/presentation/screens/reset_password_screen.dart';
+import '../../features/auth/presentation/view/forget_password_screen.dart';
+import '../../features/auth/presentation/view/login_screen.dart';
+import '../../features/auth/presentation/view/otp_screen.dart';
+import '../../features/auth/presentation/view/register_screen.dart';
+import '../../features/auth/presentation/view/reset_password_screen.dart';
 import '../../features/splash/splash_screen.dart';
 
 class Routes{
