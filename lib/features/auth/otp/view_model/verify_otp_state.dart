@@ -13,3 +13,19 @@ class VerifyOtpState {
     );
   }
 }
+
+class ResendOtpState {
+  final bool isLoading;
+  final String? error;
+  final bool isSuccess;
+
+  ResendOtpState({this.isLoading = false, this.error, this.isSuccess = false});
+
+  ResendOtpState copyWith({bool? isLoading, String? error, bool? isSuccess}) {
+    return ResendOtpState(
+      isLoading: isLoading ?? this.isLoading,
+      error: error ?? this.error,
+      isSuccess: isSuccess ?? this.isSuccess,
+    );
+  }
+}

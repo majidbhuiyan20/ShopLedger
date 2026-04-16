@@ -3,6 +3,7 @@ import 'package:shop_ledger/models/auth/login_request.dart';
 import 'package:shop_ledger/models/auth/otp_request.dart';
 import 'package:shop_ledger/models/auth/sign_up_request.dart';
 
+import '../../models/auth/resend_otp_request.dart';
 import '../../models/response_model.dart';
 
 class AuthRepository {
@@ -19,5 +20,8 @@ class AuthRepository {
 
   Future<ResponseModel> verifyOtp(OtpRequest request)async{
     return await remoteService.verifyOtp(request);
+  }
+  Future<ResponseModel> resendOtp(ResendOtpRequest request)async{
+    return await remoteService.resendOtp(request);
   }
 }

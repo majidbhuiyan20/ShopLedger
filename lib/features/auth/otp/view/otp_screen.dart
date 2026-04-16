@@ -124,7 +124,10 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
     setState(() => _error = null);
 
     // TODO: Add resendOtp method to VerifyOtpViewModel
-    // For now, show a success message
+    final viewModel = ref.read(resendOtpViewModelProvider.notifier);
+
+    // Call verify OTP API
+    await viewModel.verifyOtp(widget.email);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('OTP resent to your email'),
@@ -136,6 +139,8 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     final verifyOtpState = ref.watch(verifyOtpViewModelProvider);
+    final resendOtpState = ref.watch(resendOtpViewModelProvider);
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AuthBackground(
