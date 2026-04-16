@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_ledger/core/routes/app_routes.dart';
+import 'package:shop_ledger/features/auth/otp/view_model/verify_otp_view_model.dart';
 import 'package:shop_ledger/features/widgets/primary_button.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_style.dart';
 import '../../../widgets/auth_background.dart';
 
-class OtpScreen extends StatefulWidget {
+class OtpScreen extends ConsumerStatefulWidget {
   final String email;
   final bool isPasswordReset;
 
@@ -17,13 +19,12 @@ class OtpScreen extends StatefulWidget {
   });
 
   @override
-  State<OtpScreen> createState() => _OtpScreenState();
+  ConsumerState<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
+class _OtpScreenState extends ConsumerState<OtpScreen> {
   late List<TextEditingController> _controllers;
   late List<FocusNode> _focusNodes;
-  bool _loading = false;
   String? _error;
 
   @override
@@ -76,33 +77,7 @@ class _OtpScreenState extends State<OtpScreen> {
       return;
     }
 
-    setState(() {
-      _loading = true;
-      _error = null;
-    });
 
-    // TODO: API call to verify OTP
-    await Future.delayed(const Duration(seconds: 2));
-
-    setState(() => _loading = false);
-
-    if (mounted) {
-      // Navigate to next screen based on flow
-      if (widget.isPasswordReset) {
-        // Password reset flow: go to reset password screen
-        Navigator.pushNamed(
-          context,
-          Routes.resetPasswordRoute,
-          arguments: {'email': widget.email, 'otp': _otpValue},
-        );
-      } else {
-        // Register flow: go to login screen
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('OTP verified successfully!')),
-        );
-        Navigator.pushNamed(context, Routes.loginRoute);
-      }
-    }
   }
 
   void _resendOtp() {
@@ -121,6 +96,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final verifyOtpState = ref.watch(verifyOtpViewModelProvider);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AuthBackground(
@@ -210,8 +186,8 @@ class _OtpScreenState extends State<OtpScreen> {
               // ────────── Verify Button ────────────────────────────────
               PrimaryButton(
                 label: 'Verify OTP',
-                loading: _loading,
-                onTap: _isOtpComplete ? _verifyOtp : null,
+                loading: verifyOtpState.isLoading,
+                onTap: verifyOtpState.isLoading ? null : _verifyOtp,
               ),
 
               const SizedBox(height: 24),

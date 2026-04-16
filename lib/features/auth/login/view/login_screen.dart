@@ -48,11 +48,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
       final loginState = ref.watch(loginViewModelProvider);
-      final viewModel = ref.read(loginViewModelProvider.notifier);
-
       if (loginState.isSuccess) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushReplacementNamed(context, Routes.splashRoute);
+          Navigator.pushReplacementNamed(context, Routes.homeRoute);
         });
       }
       if(loginState.error != null){

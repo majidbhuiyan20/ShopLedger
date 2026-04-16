@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ledger/core/constants/app_strings.dart';
+import 'package:shop_ledger/features/home/view/home_screen.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
 import '../../features/auth/login/view/login_screen.dart';
-import '../../features/auth/presentation/view/otp_screen.dart';
+import '../../features/auth/otp/view/otp_screen.dart';
 import '../../features/auth/sign_up/view/register_screen.dart';
 import '../../features/auth/presentation/view/reset_password_screen.dart';
 import '../../features/splash/splash_screen.dart';
@@ -14,6 +15,7 @@ class Routes{
   static const String otpRoute="/OtpScreen";
   static const String forgotPasswordRoute="/ForgotPasswordScreen";
   static const String resetPasswordRoute="/ResetPasswordScreen";
+  static const String homeRoute="/homeScreen";
 }
 
 class RouteGenerator{
@@ -47,6 +49,9 @@ class RouteGenerator{
             otp: otp,
           ),
         );
+
+      case Routes.homeRoute:
+        return MaterialPageRoute(builder: (_)=> HomeScreen());
 
       default:
         return unDefineRoute();
