@@ -25,6 +25,8 @@ class VerifyOtpViewModel extends StateNotifier<VerifyOtpState>{
       state = state.copyWith(isLoading: false, error: "Network Error: ${e.toString()}");
     }
   }
+
+
 }
 
 final verifyOtpViewModelProvider = StateNotifierProvider<VerifyOtpViewModel, VerifyOtpState>((ref){

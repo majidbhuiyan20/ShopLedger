@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_ledger/core/routes/app_routes.dart';
+import 'package:shop_ledger/features/widgets/app_validators.dart';
 import 'package:shop_ledger/features/widgets/primary_button.dart';
 import 'package:shop_ledger/features/widgets/primary_outline_button.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -8,7 +9,6 @@ import '../../../../core/constants/app_text_style.dart';
 import '../../../widgets/common_widgets.dart';
 import '../../../widgets/auth_background.dart';
 import '../view_model/sign_up_provider.dart';
-import '../view_model/sign_up_validator.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -55,12 +55,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       _termsError = null;
     });
 
-    // Run UI validators (best practice: keep validation in UI layer)
-    final fullNameErr = SignUpValidator.validateFullName(_fullNameController.text);
-    final usernameErr = SignUpValidator.validateUsername(_usernameController.text);
-    final emailErr = SignUpValidator.validateEmail(_emailController.text);
-    final passwordErr = SignUpValidator.validatePassword(_passwordController.text);
-    final termsErr = SignUpValidator.validateTerms(_agreedToTerms);
+    // Run UI validators using AppValidators (best practice: validation in UI layer)
+    final fullNameErr = AppValidators.name(_fullNameController.text);
+    final usernameErr = AppValidators.name(_usernameController.text);
+    final emailErr = AppValidators.email(_emailController.text);
+    final passwordErr = AppValidators.password(_passwordController.text);
+    final termsErr = _agreedToTerms ? null : 'You must agree to the terms';
 
     final hasError = [fullNameErr, usernameErr, emailErr, passwordErr, termsErr].any((e) => e != null);
 
@@ -165,6 +165,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
                 // ── Email ──────────────────────────────────────
                 HInputField(
+                  validator: AppValidators.email,
                   label: 'Email',
                   hint: 'example@email.com',
                   controller: _emailController,

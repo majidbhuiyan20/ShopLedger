@@ -77,20 +77,59 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
       return;
     }
 
+    final viewModel = ref.read(verifyOtpViewModelProvider.notifier);
 
+    // Call verify OTP API
+    await viewModel.verifyOtp(widget.email, _otpValue);
+
+    if (!mounted) return;
+
+    // Watch the state after verification
+    final state = ref.read(verifyOtpViewModelProvider);
+
+    if (state.isSuccess) {
+      // OTP verified successfully
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (widget.isPasswordReset) {
+          // Navigate to reset password screen
+          Navigator.pushReplacementNamed(
+            context,
+            Routes.resetPasswordRoute,
+            arguments: {
+              'email': widget.email,
+              'otp': _otpValue,
+            },
+          );
+        } else {
+          // Registration flow - navigate to login
+          Navigator.pushReplacementNamed(
+            context,
+            Routes.loginRoute,
+          );
+        }
+      });
+    } else if (state.error != null) {
+      // Show error message inline
+      setState(() => _error = state.error);
+    }
   }
 
-  void _resendOtp() {
+  Future<void> _resendOtp() async {
     // Clear all fields
     for (var controller in _controllers) {
       controller.clear();
     }
     // Reset focus to first field
     _focusNodes[0].requestFocus();
+    setState(() => _error = null);
 
-    // TODO: API call to resend OTP
+    // TODO: Add resendOtp method to VerifyOtpViewModel
+    // For now, show a success message
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('OTP resent to your email')),
+      const SnackBar(
+        content: Text('OTP resent to your email'),
+        duration: Duration(seconds: 2),
+      ),
     );
   }
 
