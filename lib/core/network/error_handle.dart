@@ -15,7 +15,11 @@ class ErrorHandle {
           print("Status Code: ${e.response?.statusCode}");
           print("Response Data: ${e.response?.data}");
         }
-        throw Exception("${e.response?.data['message']['message']}");
+        // Extract message from response
+        final errorMessage = e.response?.data is Map 
+          ? (e.response?.data['message'] ?? 'Request failed')
+          : 'Request failed';
+        throw Exception(errorMessage);
       case DioExceptionType.cancel:
         print("Request cancelled: ${e.message}");
         throw Exception("Request was cancelled: ${e.message}");

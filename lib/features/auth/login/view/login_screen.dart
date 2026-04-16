@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_ledger/features/auth/login/view_model/login_view_model.dart';
 import 'package:shop_ledger/features/widgets/app_validators.dart';
+import 'package:shop_ledger/core/resource/utils.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_style.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -44,20 +45,42 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-      final loginState = ref.watch(loginViewModelProvider);
-      if (loginState.isSuccess) {
+    final loginState = ref.watch(loginViewModelProvider);
+
+    // Listen for login state changes (success/error)
+    ref.listen(loginViewModelProvider, (prev, next) {
+      // ✅ SUCCESS - Show success toast and navigate to home
+      if (next.isSuccess && (prev?.isSuccess != true)) {
+        Utils.showToast(
+          message: 'Login successful! Welcome back 👋',
+          backgroundColor: AppColors.success,
+          textColor: Colors.white,
+        );
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushReplacementNamed(context, Routes.homeRoute);
+          if (mounted) {
+            Navigator.pushReplacementNamed(context, Routes.homeRoute);
+          }
         });
       }
-      if(loginState.error != null){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(loginState.error!))
+
+      // ❌ ERROR - Show error toast only when error is newly set
+      if (next.error != null && (prev?.error == null || prev!.error != next.error)) {
+        Utils.showToast(
+          message: next.error!,
+          backgroundColor: AppColors.danger,
+          textColor: Colors.white,
         );
+        // Clear error after showing toast to prevent duplicate toasts
+        Future.delayed(const Duration(milliseconds: 100), () {
+          if (mounted) {
+            ref.read(loginViewModelProvider.notifier).clearError();
+          }
+        });
       }
+    });
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AuthBackground(

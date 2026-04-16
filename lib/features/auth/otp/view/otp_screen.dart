@@ -115,7 +115,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
   }
 
   Future<void> _resendOtp() async {
-    // Clear all fields
+
     for (var controller in _controllers) {
       controller.clear();
     }

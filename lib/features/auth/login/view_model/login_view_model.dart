@@ -19,12 +19,22 @@ class LoginViewModel  extends StateNotifier<LoginState>{
         state = state.copyWith(isLoading: false, isSuccess: true);
       }
       else{
-        state = state.copyWith(isLoading: false, error: response.errorMessage ?? "Login Field");
+        state = state.copyWith(isLoading: false, error: response.errorMessage ?? "Login failed");
       }
     }
     catch(e){
-       state = state.copyWith(isLoading: false, error: "Network error: ${e.toString()}");
+      // Extract error message from Exception if available
+      String errorMsg = e.toString();
+      if(errorMsg.contains('Exception: ')){
+        errorMsg = errorMsg.replaceAll('Exception: ', '');
+      }
+      state = state.copyWith(isLoading: false, error: errorMsg);
     }
+  }
+
+  /// Clear error message after showing toast
+  void clearError() {
+    state = state.copyWith(error: null);
   }
 }
 
