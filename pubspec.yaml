@@ -24,6 +24,8 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
 flutter:
+  assets:
+    - assets/icons/
   fonts:
     - family: PlusJakartaSans
       fonts:
@@ -64,4 +66,3 @@ flutter:
           style: italic
 
   uses-material-design: true
-

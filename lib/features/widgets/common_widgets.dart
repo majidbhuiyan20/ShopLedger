@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/constants/app_assets.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_style.dart';
 
@@ -99,19 +100,11 @@ class HLogoMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width:        size,
-      height:       size,
-      decoration:   BoxDecoration(
-        gradient:     AppColors.primaryGradient,
-        borderRadius: BorderRadius.circular(size * 0.28),
-      ),
-      child: Center(
-        child: Text(
-          'SL',
-          style: AppTextStyle.logoText.copyWith(fontSize: size * 0.5),
-        ),
-      ),
+    return Image.asset(
+      AppAssets.logo,
+      width: size,
+      height: size,
+      fit: BoxFit.contain,
     );
   }
 }

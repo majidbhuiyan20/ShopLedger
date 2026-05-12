@@ -54,7 +54,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       // ✅ SUCCESS - Show success toast and navigate to home
       if (next.isSuccess && (prev?.isSuccess != true)) {
         Utils.showToast(
-          message: 'Login successful! Welcome back 👋',
+          message: 'Login successful! Welcome back Shop Ledger',
           backgroundColor: AppColors.success,
           textColor: Colors.white,
         );
@@ -103,7 +103,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Hisabi', style: AppTextStyle.h3),
+                        Text('ShopLedger', style: AppTextStyle.h3),
                         Text('Business Management', style: AppTextStyle.bodySmall),
                       ],
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/constants/app_assets.dart';
 import '../auth/login/view/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _moveToLoginScreen() async {
     await Future.delayed(const Duration(seconds: 3));
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>LoginScreen()));
+    if (mounted) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>const LoginScreen()));
+    }
   }
 
 
@@ -30,7 +33,13 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Splash Screen")
+              Image.asset(
+                AppAssets.logo,
+                width: 150,
+                height: 150,
+              ),
+              const SizedBox(height: 20),
+              const CircularProgressIndicator(),
             ],
           ),
         ),
