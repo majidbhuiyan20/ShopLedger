@@ -11,7 +11,7 @@ class AppColors {
   // Primary — Deep Indigo
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   //static const Color primary        = Color(0xFF4F46E5); // main buttons, links
-  static const Color primary        = Color(0xFFE2136E); // Bkash App Color
+  static const Color primary        = Color(0xFFEA0669); // Bkash App Color
  // static const Color primaryDark    = Color(0xFF3730A3); // pressed state
   static const Color primaryDark    = Color(0xFFB3004D); // pressed state
   static const Color primaryLight   = Color(0xFF818CF8); // icons, highlights

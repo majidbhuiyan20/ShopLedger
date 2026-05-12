@@ -13,7 +13,7 @@ class HomeHeader extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.fromLTRB(20, 60, 20, 40),
           decoration: const BoxDecoration(
-            color: AppColors.primaryDark,
+            color: AppColors.primary,
           ),
           child: Column(
             children: [
@@ -58,7 +58,7 @@ class HomeHeader extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.12),
+                  color: Colors.white.withOpacity(0.25),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Column(
@@ -94,9 +94,9 @@ class HomeHeader extends StatelessWidget {
         ),
         // Decorative Circles
         Positioned(
-          right: -30,
-          top: 40,
-          child: CircleAvatar(radius: 60, backgroundColor: Colors.white.withOpacity(0.05)),
+          right: -80,
+          top: -30,
+          child: CircleAvatar(radius: 100, backgroundColor: Colors.white.withOpacity(0.1)),
         ),
       ],
     );
