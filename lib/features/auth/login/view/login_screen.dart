@@ -112,7 +112,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                 const SizedBox(height: 40),
 
-                Text('Welcome Back 👋', style: AppTextStyle.h1),
+                Text('Welcome Back', style: AppTextStyle.h1),
                 const SizedBox(height: 8),
                 Text(
                   'Login to your account',

@@ -3,11 +3,13 @@ import 'app_colors.dart';
 
 /// ShopLedger App — Typography System
 /// Font: PlusJakartaSans (clean, modern, readable)
+/// Font: TiroBangla (for Bangla text)
 
 class AppTextStyle {
   AppTextStyle._();
 
   static const String fontFamily = 'PlusJakartaSans';
+  static const String banglaFontFamily = 'TiroBangla';
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // Display — Hero text, splash

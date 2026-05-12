@@ -64,5 +64,8 @@ flutter:
         - asset: assets/fonts/PlusJakartaSans-ExtraBoldItalic.ttf
           weight: 800
           style: italic
+    - family: TiroBangla
+      fonts:
+        - asset: assets/fonts/TiroBangla-Regular.ttf
 
   uses-material-design: true
