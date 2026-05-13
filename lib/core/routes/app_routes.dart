@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ledger/core/constants/app_strings.dart';
-import 'package:shop_ledger/features/home/view/home_screen.dart';
+import 'package:shop_ledger/features/bottom_nav/view/bottom_nav_bar.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
 import '../../features/auth/login/view/login_screen.dart';
 import '../../features/auth/otp/view/otp_screen.dart';
@@ -51,7 +51,7 @@ class RouteGenerator{
         );
 
       case Routes.homeRoute:
-        return MaterialPageRoute(builder: (_)=> HomeScreen());
+        return MaterialPageRoute(builder: (_)=> const MainScreen());
 
       default:
         return unDefineRoute();

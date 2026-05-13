@@ -51,6 +51,8 @@ class AuthRemoteService {
         final token = response['data']['access_token'];
         if(token != null){
           await SharedPreferenceData.setToken(token);
+          // Update ApiClient headers with the new token
+          await ApiClient.headerSet(token);
         }
         return ResponseModel(isSuccess: true, data: response['data']);
       }
