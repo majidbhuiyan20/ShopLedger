@@ -35,13 +35,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFFF9C4), 
+                      color: const Color(0xFFFFF9C4),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: const Color(0xFFFFE082)),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.warning_amber_rounded, color: Colors.orange, size: 26),
+                        const Icon(
+                          Icons.warning_amber_rounded,
+                          color: Colors.orange,
+                          size: 26,
+                        ),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
@@ -58,20 +62,73 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   const SizedBox(height: 16),
-                  
+
                   // ── Statistics Summary Card (Refactored) ───────────────
                   const StatSummaryCard(),
-                  SizedBox(height: 16,),
-                  
-                  // ── Start New Sell Card (Refactored) ───────────────
-                  StartNewSellCard(onTap: () {  },),
-                  SizedBox(height: 8,),
-                  SectionHeader(
-                    title: "সাম্প্রতিক বিক্রি",
-                    onActionTap: () {
+                  SizedBox(height: 16),
 
-                    },
-                  )
+                  // ── Start New Sell Card (Refactored) ───────────────
+                  StartNewSellCard(onTap: () {}),
+                  SizedBox(height: 8),
+                  SectionHeader(title: "সাম্প্রতিক বিক্রি", onActionTap: () {}),
+
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.04),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: List.generate(3, (index) {
+                        return Column(
+                          children: [
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: CircleAvatar(
+                                backgroundColor: AppColors.primary.withOpacity(
+                                  0.1,
+                                ),
+                                child: const Icon(
+                                  Icons.shopping_bag_outlined,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                              title: Text(
+                                "Invoice #102$index",
+                                style: AppTextStyle.bodyMedium.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                "20 Oct 2023",
+                                style: AppTextStyle.bodySmall,
+                              ),
+                              trailing: Text(
+                                "৳ 540.00",
+                                style: AppTextStyle.bodyMedium.copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            if (index !=
+                                2) // Don't show divider for the last item
+                              const Divider(
+                                height: 1,
+                                color: Color(0xFFEEEEEE),
+                              ),
+                          ],
+                        );
+                      }),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -81,5 +138,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
