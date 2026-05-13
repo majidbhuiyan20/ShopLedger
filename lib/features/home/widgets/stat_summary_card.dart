@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_ledger/core/constants/app_colors.dart';
 import '../../../core/constants/app_text_style.dart';
 
 class StatSummaryCard extends StatelessWidget {
@@ -49,8 +50,9 @@ class StatSummaryCard extends StatelessWidget {
               Text(
                 label,
                 style: AppTextStyle.labelSmall.copyWith(
-                  fontSize: 11,
-                  color: Colors.grey.shade600,
+                  fontSize: 14,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w900,
                   fontFamily: AppTextStyle.banglaFontFamily,
                 ),
               ),
@@ -62,7 +64,7 @@ class StatSummaryCard extends StatelessWidget {
             style: AppTextStyle.h4.copyWith(
               fontWeight: FontWeight.w900,
               color: Colors.black,
-              fontSize: 15,
+              fontSize: 18,
               fontFamily: AppTextStyle.banglaFontFamily,
             ),
           ),

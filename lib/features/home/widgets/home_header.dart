@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_style.dart';
+import '../../../core/utils/date_formatter.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -25,9 +26,10 @@ class HomeHeader extends StatelessWidget {
                     children: [
                       Text(
                         "আপনার দোকান",
-                        style: AppTextStyle.bodySmall.copyWith(
-                          color: Colors.white.withOpacity(0.85),
-                          fontWeight: FontWeight.w500,
+                        style: AppTextStyle.bodyMedium.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
                           fontFamily: AppTextStyle.banglaFontFamily,
                         ),
                       ),
@@ -37,7 +39,7 @@ class HomeHeader extends StatelessWidget {
                         style: AppTextStyle.h2.copyWith(
                           color: Colors.white,
                           fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w800,
                           fontFamily: AppTextStyle.banglaFontFamily,
                         ),
                       ),
@@ -65,9 +67,11 @@ class HomeHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "শনিবার, ১৫ মার্চ ২০২৫",
-                      style: AppTextStyle.bodySmall.copyWith(
-                        color: Colors.white.withOpacity(0.9),
+                      DateFormatter.toBanglaDate(DateTime.now()),
+                      style: AppTextStyle.bodyMedium.copyWith(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
                         fontFamily: AppTextStyle.banglaFontFamily,
                       ),
                     ),
