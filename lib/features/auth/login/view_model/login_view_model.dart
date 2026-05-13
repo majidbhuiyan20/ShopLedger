@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:shop_ledger/data/repositories/auth_repository.dart';
 import 'package:shop_ledger/features/auth/login/view_model/login_state.dart';
-import 'package:shop_ledger/models/auth/login_request.dart';
-
+import '../../../../data/models/auth/login_request.dart';
 import '../../sign_up/view_model/sign_up_provider.dart';
 
 class LoginViewModel  extends StateNotifier<LoginState>{

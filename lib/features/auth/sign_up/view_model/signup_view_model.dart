@@ -1,6 +1,6 @@
 import 'package:shop_ledger/features/auth/sign_up/view_model/sign_up_state.dart';
-import 'package:shop_ledger/models/auth/sign_up_request.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import '../../../../data/models/auth/sign_up_request.dart';
 import '../../../../data/repositories/auth_repository.dart';
 
 /// Professional Sign Up View Model with API integration

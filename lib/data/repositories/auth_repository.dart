@@ -1,10 +1,9 @@
 import 'package:shop_ledger/data/remote/auth_remote_service.dart';
-import 'package:shop_ledger/models/auth/login_request.dart';
-import 'package:shop_ledger/models/auth/otp_request.dart';
-import 'package:shop_ledger/models/auth/sign_up_request.dart';
-
-import '../../models/auth/resend_otp_request.dart';
-import '../../models/response_model.dart';
+import '../models/auth/login_request.dart';
+import '../models/auth/otp_request.dart';
+import '../models/auth/resend_otp_request.dart';
+import '../models/auth/sign_up_request.dart';
+import '../models/response_model.dart';
 
 class AuthRepository {
   final AuthRemoteService remoteService;

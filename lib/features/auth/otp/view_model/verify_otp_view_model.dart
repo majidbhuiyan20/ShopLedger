@@ -1,9 +1,8 @@
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:shop_ledger/data/repositories/auth_repository.dart';
 import 'package:shop_ledger/features/auth/otp/view_model/verify_otp_state.dart';
-import 'package:shop_ledger/models/auth/otp_request.dart';
-
-import '../../../../models/auth/resend_otp_request.dart';
+import '../../../../data/models/auth/otp_request.dart';
+import '../../../../data/models/auth/resend_otp_request.dart';
 import '../../sign_up/view_model/sign_up_provider.dart';
 
 class VerifyOtpViewModel extends StateNotifier<VerifyOtpState>{

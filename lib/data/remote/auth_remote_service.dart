@@ -1,11 +1,10 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_ledger/core/network/api_client.dart';
 import 'package:shop_ledger/core/network/api_endpoints.dart';
-import 'package:shop_ledger/models/auth/login_request.dart';
-import 'package:shop_ledger/models/auth/otp_request.dart';
-import 'package:shop_ledger/models/auth/resend_otp_request.dart';
-import 'package:shop_ledger/models/auth/sign_up_request.dart';
-import 'package:shop_ledger/models/response_model.dart';
+import '../models/auth/login_request.dart';
+import '../models/auth/otp_request.dart';
+import '../models/auth/resend_otp_request.dart';
+import '../models/auth/sign_up_request.dart';
+import '../models/response_model.dart';
 import '../sources/local/shared_preference/shared_preference_data.dart';
 
 class AuthRemoteService {
