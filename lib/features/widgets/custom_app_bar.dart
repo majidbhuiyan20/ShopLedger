@@ -4,10 +4,12 @@ import '../../core/constants/app_colors.dart';
 
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key, required this.appBarTitle, required this.onTap});
+  const CustomAppBar({super.key, required this.appBarTitle, required this.onTap, this.icon});
 
   final String appBarTitle;
   final VoidCallback onTap;
+  final IconData? icon;
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +37,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white.withOpacity(.2), width: 1.5),
               ),
-              child: const Icon(
-                Icons.add,
+              child: Icon(
+                icon ?? Icons.add,
                 color: Colors.white,
                 size: 24,
               ),
