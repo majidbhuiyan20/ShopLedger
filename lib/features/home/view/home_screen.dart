@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shop_ledger/features/home/widgets/stock_alert_home_widget.dart';
 import '../../../core/constants/app_text_style.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../widgets/section_header.dart';
 import '../widgets/home_header.dart';
+import '../widgets/recent_sell_home_history.dart';
 import '../widgets/start_new_sell_card.dart';
 import '../widgets/stat_summary_card.dart';
 import '../../widgets/common_widgets.dart';
@@ -71,86 +73,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   StartNewSellCard(onTap: () {}),
                   SizedBox(height: 8),
                   SectionHeader(title: "সাম্প্রতিক বিক্রি", onActionTap: () {}),
+                  RecentSellHomeHistory(),
 
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: List.generate(3, (index) {
-                        return Column(
-                          children: [
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              leading: CircleAvatar(
-                                backgroundColor: AppColors.primary.withOpacity(
-                                  0.1,
-                                ),
-                                child: const Icon(
-                                  Icons.shopping_bag_outlined,
-                                  color: AppColors.primary,
-                                ),
-                              ),
-                              title: Text(
-                                "রহিম মিয়া",
-                                style: AppTextStyle.bodyMedium.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 18,
-                                  fontFamily: AppTextStyle.banglaFontFamily,
-                                ),
-                              ),
-                              subtitle: Row(
-                                children: [
-                                  Text(
-                                    "বড় বাড়ি, বানাইল",
-                                    style: AppTextStyle.bodyMedium.copyWith(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              trailing: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "৳ 540.00",
-                                    style: AppTextStyle.bodyMedium.copyWith(
-                                      color: AppColors.primary,
-                                      fontWeight: FontWeight.bold,
 
-                                    ),
-                                  ),
-                                  Text(
-                                    "বাকি",
-                                    style: AppTextStyle.bodyMedium.copyWith(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            if (index !=
-                                2) // Don't show divider for the last item
-                              const Divider(
-                                height: 1,
-                                color: Color(0xFFEEEEEE),
-                              ),
-                          ],
-                        );
-                      }),
-                    ),
-                  ),
+                  SizedBox(height: 8),
+                  SectionHeader(title: "স্টক সতর্কতা", onActionTap: () {}),
+                  StockAlertHomeWidget()
                 ],
               ),
             ),
@@ -160,3 +88,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
