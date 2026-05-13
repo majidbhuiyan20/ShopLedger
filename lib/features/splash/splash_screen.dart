@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_assets.dart';
-import '../auth/login/view/login_screen.dart';
+import '../../core/routes/app_routes.dart';
+import '../../data/sources/local/shared_preference/shared_preference_data.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,14 +14,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    _moveToLoginScreen();
+    _handleNavigation();
     super.initState();
   }
 
-  void _moveToLoginScreen() async {
+  void _handleNavigation() async {
     await Future.delayed(const Duration(seconds: 3));
-    if (mounted) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>const LoginScreen()));
+    if (!mounted) return;
+
+    final token = await SharedPreferenceData.getToken();
+    
+    if (token != null && token.isNotEmpty) {
+      Navigator.pushReplacementNamed(context, Routes.homeRoute);
+    } else {
+      Navigator.pushReplacementNamed(context, Routes.loginRoute);
     }
   }
 

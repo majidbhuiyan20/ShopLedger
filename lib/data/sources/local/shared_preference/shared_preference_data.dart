@@ -3,7 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferenceData {
   static Future<void> setToken(String? token) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('auth_token', "$token");
+    if (token != null) {
+      await prefs.setString('auth_token', token);
+    } else {
+      await prefs.remove('auth_token');
+    }
   }
 
   static Future<String?> getToken() async {

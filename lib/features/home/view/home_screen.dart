@@ -101,21 +101,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               title: Text(
-                                "Invoice #102$index",
+                                "রহিম মিয়া",
                                 style: AppTextStyle.bodyMedium.copyWith(
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 18,
+                                  fontFamily: AppTextStyle.banglaFontFamily,
                                 ),
                               ),
-                              subtitle: Text(
-                                "20 Oct 2023",
-                                style: AppTextStyle.bodySmall,
+                              subtitle: Row(
+                                children: [
+                                  Text(
+                                    "বড় বাড়ি, বানাইল",
+                                    style: AppTextStyle.bodyMedium.copyWith(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              trailing: Text(
-                                "৳ 540.00",
-                                style: AppTextStyle.bodyMedium.copyWith(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              trailing: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "৳ 540.00",
+                                    style: AppTextStyle.bodyMedium.copyWith(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.bold,
+
+                                    ),
+                                  ),
+                                  Text(
+                                    "বাকি",
+                                    style: AppTextStyle.bodyMedium.copyWith(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             if (index !=
