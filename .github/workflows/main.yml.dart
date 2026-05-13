@@ -41,4 +41,4 @@ jobs:
         with:
           artifacts: "build/app/outputs/flutter-apk/*.apk,build/app/outputs/bundle/release/*.aab,build/app/outputs/apk/profile/*.apk,build/ios/iphoneos/app.ipa"
           tag: v1.0.${{ github.run_number }}-${{ github.event.inputs.branch_name || 'main' }}
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.TOKEN }}// Token update
