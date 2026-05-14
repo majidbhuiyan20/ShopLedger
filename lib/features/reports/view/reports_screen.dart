@@ -51,7 +51,7 @@ class ReportsScreen extends StatelessWidget {
               Consumer(
                 builder: (context, ref, _) {
                   final selected = ref.watch(selectedFilterProvider);
-          
+
                   return SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -86,20 +86,26 @@ class ReportsScreen extends StatelessWidget {
               SizedBox(height: 16),
               TotalSellHistory(currentMonth: currentMonth),
               SizedBox(height: 16),
-              Text("সাপ্তাহিক বিক্রি", style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-                color: Colors.black
-              ),),
-              const SizedBox(height: 16),
-              WeeklySellWidgets(),
-              SizedBox(height: 16,),
-              Text("সেরা প্রোডাক্ট", style: TextStyle(
+              Text(
+                "সাপ্তাহিক বিক্রি",
+                style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
-                  color: Colors.black
-              ),),
-              const SizedBox(height: 16,),
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 16),
+              WeeklySellWidgets(),
+              SizedBox(height: 16),
+              Text(
+                "সেরা প্রোডাক্ট",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 16),
               TopProductList(),
               const SizedBox(height: 32),
             ],
@@ -109,7 +115,3 @@ class ReportsScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
